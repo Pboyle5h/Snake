@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-   
+<!--Styleing used to add the border colour and size of the border-->
     <style type="text/css">
-      canvas {		
-		border:10px solid #FFA500 ;
-		
-	}
+      
+        canvas {		
+		border:10px solid #FFA500 ;		
+	    }
       
       </style>
   </head>
-  <body>
-    <img src="img\snake.png" alt="Snake" align="right" style="width:104px; height:128px;">
+<body>
       
     <script type="text/javascript">
 //constants
         var COLS =26, ROWS=26; 
 //IDs
-        var EMPTY=0, SNAKE=1, FRUIT=2, SPECIAL=3;;
+        var EMPTY=0, SNAKE=1, FRUIT=2, SPECIAL=3;
 //Direction
         var LEFT=0, UP=1, RIGHT=2, DOWN=3;
 //keyCodes
     var    KLEFT=37, KUP=38, KRIGHT=39, KDOWN=40;
+//varibles    
+    var canvas, ctx, keystate, frames , score, highscore=0;
         
-        
+//grid is a datastructure used to segment the canvas into a grid       
          grid = {
             width: null,
             height: null,
@@ -39,23 +40,22 @@
                     this._grid.push([]);
                     for (var y=0; y <h ; y++){
                         this._grid[x].push(d);
-                    }
-                }
-                
-            
+                    }//inner for end
+                }//outer for end               
             },
-            
+
+//set the value of the grid cells to the x and y coordinates             
             set: function(val, x, y){
                 this._grid[x][y] = val;
             
             },
-            
+//get the x and y coordinates            
             get: function(x, y){
                 return this._grid[x][y];
                 
-            }
-        }
-        
+            }//get ends
+        }//grid ends
+//Snake is a queue with the last varible pointing to the last element in the queue
          snake = {
             direction: null,
             _queue: null,
@@ -67,9 +67,8 @@
                 this.insert(x,y);
             
             },
-            
+//insert is used to add elements to the queue            
             insert: function(x, y){
-            //put at the start 
             this._queue.unshift({x:x, y:y});
             this.last = this._queue[0];
                 
@@ -116,7 +115,7 @@
         
             
         
-        var canvas, ctx, keystate, frames , score, highscore=0;
+        
         
         function main(){
            
@@ -225,12 +224,13 @@
        
      
         function init(){
+            
             score = 0;
             grid.init(EMPTY, COLS, ROWS);
             var sp = {x:Math.floor(COLS/2), y:ROWS-1};
             snake.init(UP, sp.x, sp.y);
             grid.set(SNAKE, sp.x, sp.y);
-            //in here is where i should put a pause of some sort 
+           
             
             setFood();
           
